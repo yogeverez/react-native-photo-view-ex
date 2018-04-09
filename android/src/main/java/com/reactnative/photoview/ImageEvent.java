@@ -33,7 +33,7 @@ public class ImageEvent extends Event<ImageEvent> {
   private final int mEventType;
   private WritableMap mMap;
 
-  public ImageEvent(int viewId, @ImageEventType int eventType) {
+  ImageEvent(int viewId, @ImageEventType int eventType) {
     super(viewId);
     mEventType = eventType;
     mMap = null;

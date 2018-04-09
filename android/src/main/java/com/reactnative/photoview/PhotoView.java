@@ -5,8 +5,8 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
+
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.drawee.controller.ControllerListener;
@@ -14,6 +14,7 @@ import com.facebook.drawee.drawable.AutoRotateDrawable;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.common.RotationOptions;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -21,7 +22,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.common.SystemClock;
 import com.facebook.react.modules.fresco.ReactNetworkImageRequest;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.events.EventDispatcher;
@@ -48,9 +48,8 @@ public class PhotoView extends PhotoDraweeView {
     private boolean mIsDirty;
     private boolean mIsLocalImage;
     private Drawable mLoadingImageDrawable;
-    private PipelineDraweeControllerBuilder mDraweeControllerBuilder;
     private int mFadeDurationMs = -1;
-    private ControllerListener mControllerListener;
+    private ControllerListener<ImageInfo> mControllerListener;
 
     public PhotoView(Context context) {
         super(context);
@@ -87,7 +86,7 @@ public class PhotoView extends PhotoDraweeView {
                                           ResourceDrawableIdHelper resourceDrawableIdHelper) {
         Drawable drawable = resourceDrawableIdHelper.getResourceDrawable(getContext(), name);
         mLoadingImageDrawable =
-                drawable != null ? (Drawable) new AutoRotateDrawable(drawable, 1000) : null;
+                drawable != null ? new AutoRotateDrawable(drawable, 1000) : null;
         mIsDirty = true;
     }
 
@@ -155,16 +154,16 @@ public class PhotoView extends PhotoDraweeView {
                         : mIsLocalImage ? 0 : REMOTE_IMAGE_FADE_DURATION_MS);
 
         ImageRequestBuilder imageRequestBuilder = ImageRequestBuilder.newBuilderWithSource(mUri)
-                .setAutoRotateEnabled(true).setResizeOptions(new ResizeOptions(getMaxTextureSize(), getMaxTextureSize()));
+                .setRotationOptions(RotationOptions.autoRotate())
+                .setResizeOptions(new ResizeOptions(getMaxTextureSize(), getMaxTextureSize()));
 
         ImageRequest imageRequest = ReactNetworkImageRequest
                 .fromBuilderWithHeaders(imageRequestBuilder, mHeaders);
 
-        mDraweeControllerBuilder = builder;
-        mDraweeControllerBuilder.setImageRequest(imageRequest);
-        mDraweeControllerBuilder.setAutoPlayAnimations(true);
-        mDraweeControllerBuilder.setOldController(getController());
-        mDraweeControllerBuilder.setControllerListener(new BaseControllerListener<ImageInfo>() {
+        builder.setImageRequest(imageRequest);
+        builder.setAutoPlayAnimations(true);
+        builder.setOldController(getController());
+        builder.setControllerListener(new BaseControllerListener<ImageInfo>() {
             @Override
             public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
                 super.onFinalImageSet(id, imageInfo, animatable);
@@ -176,10 +175,10 @@ public class PhotoView extends PhotoDraweeView {
         });
 
         if (mControllerListener != null) {
-            mDraweeControllerBuilder.setControllerListener(mControllerListener);
+            builder.setControllerListener(mControllerListener);
         }
 
-        setController(mDraweeControllerBuilder.build());
+        setController(builder.build());
         setViewCallbacks();
 
         mIsDirty = false;

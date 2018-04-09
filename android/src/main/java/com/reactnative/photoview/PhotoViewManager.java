@@ -1,8 +1,6 @@
 package com.reactnative.photoview;
 
-import android.widget.ImageView.ScaleType;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -74,7 +72,7 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
     }
 
     @ReactProp(name = "androidZoomTransitionDuration")
-    public void setScale(PhotoView view, int durationMs) {
+    public void setZoomTransitionDuration(PhotoView view, int durationMs) {
         view.setZoomTransitionDuration(durationMs);
     }
 
@@ -111,9 +109,9 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
 
     @Override
     public @Nullable
-    Map getExportedCustomDirectEventTypeConstants() {
+    Map<String, Object> getExportedCustomDirectEventTypeConstants() {
         return MapBuilder.of(
-                ImageEvent.eventNameForType(ImageEvent.ON_ERROR), MapBuilder.of("registrationName", "onPhotoViewerError"),
+                ImageEvent.eventNameForType(ImageEvent.ON_ERROR), (Object) MapBuilder.of("registrationName", "onPhotoViewerError"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD_START), MapBuilder.of("registrationName", "onPhotoViewerLoadStart"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD), MapBuilder.of("registrationName", "onPhotoViewerLoad"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD_END), MapBuilder.of("registrationName", "onPhotoViewerLoadEnd"),

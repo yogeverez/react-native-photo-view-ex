@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { requireNativeComponent, View } from 'react-native';
-import ViewPropTypes from 'react-native/Libraries/Components/View/ViewPropTypes';
+import { requireNativeComponent, View, ViewPropTypes } from 'react-native';
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -13,7 +12,7 @@ export default class PhotoView extends Component {
             }),
             // Opaque type returned by require('./image.jpg')
             PropTypes.number
-        ]),
+        ]).isRequired,
         loadingIndicatorSource: PropTypes.oneOfType([
             PropTypes.shape({
                 uri: PropTypes.string
@@ -39,7 +38,7 @@ export default class PhotoView extends Component {
 
     render() {
         const source = resolveAssetSource(this.props.source);
-        var loadingIndicatorSource = resolveAssetSource(this.props.loadingIndicatorSource);
+        const loadingIndicatorSource = resolveAssetSource(this.props.loadingIndicatorSource);
 
         if (source && source.uri === '') {
             console.warn('source.uri should not be an empty string');
@@ -50,9 +49,9 @@ export default class PhotoView extends Component {
         }
 
         if (source && source.uri) {
-            var {onLoadStart, onLoad, onLoadEnd, onProgress, onTap, onViewTap, onScale, onError, ...props} = this.props;
+            const {onLoadStart, onLoad, onLoadEnd, onProgress, onTap, onViewTap, onScale, onError, ...props} = this.props;
 
-            var nativeProps = {
+            const nativeProps = {
                 onPhotoViewerError: onError,
                 onPhotoViewerLoadStart: onLoadStart,
                 onPhotoViewerLoad: onLoad,
@@ -72,7 +71,7 @@ export default class PhotoView extends Component {
     }
 }
 
-var cfg = {
+const cfg = {
     nativeOnly: {
         onPhotoViewerError: true,
         onPhotoViewerLoadStart: true,

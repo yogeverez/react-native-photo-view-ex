@@ -20,11 +20,11 @@ import com.facebook.common.util.UriUtil;
 
   private Map<String, Integer> mResourceDrawableIdMap;
 
-  public ResourceDrawableIdHelper() {
-    mResourceDrawableIdMap = new HashMap<String, Integer>();
+  ResourceDrawableIdHelper() {
+    mResourceDrawableIdMap = new HashMap<>();
   }
 
-  public int getResourceDrawableId(Context context, @Nullable String name) {
+  private int getResourceDrawableId(Context context, @Nullable String name) {
     if (name == null || name.isEmpty()) {
       return 0;
     }
