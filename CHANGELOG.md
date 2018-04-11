@@ -1,10 +1,13 @@
-## react-native-photo-view fork
+## react-native-photo-view-ex
 
-#### v1.5.4
+Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-view)
+
+#### Conversion to react-native-photo-view-ex v1.0.0 from react-native-photo-view v1.5.4
 * Adds typings.
 * Renames `androidZoomTransitionDuration` to `zoomTransitionDuration`
 * Removes `androidScaleType` property.
 * Adds `resizeMode` property supporting 'center', 'contain', 'cover', 'fitEnd', 'fitStart', 'stretch'. The default is 'cover'.
+* Using the `Image.resolveAssetSource` method instead of requiring the module directly.
 * Updated README.md
 
 #### v1.5.3

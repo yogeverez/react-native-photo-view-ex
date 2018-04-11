@@ -1,4 +1,4 @@
-package com.reactnative.photoview;
+package io.amarcruz.photoview;
 
 import android.content.Context;
 import android.graphics.drawable.Animatable;

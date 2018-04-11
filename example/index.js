@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View
 } from 'react-native'
-import PhotoView from 'react-native-photo-view'
+import PhotoView from 'react-native-photo-view-ex'
 
 export default class Example extends React.Component {
 

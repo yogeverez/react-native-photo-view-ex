@@ -1,4 +1,4 @@
-package com.reactnative.photoview;
+package io.amarcruz.photoview;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;

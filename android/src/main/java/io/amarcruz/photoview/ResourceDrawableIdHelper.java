@@ -1,4 +1,4 @@
-package com.reactnative.photoview;
+package io.amarcruz.photoview;
 
 import javax.annotation.Nullable;
 

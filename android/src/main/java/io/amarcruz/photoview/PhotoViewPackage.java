@@ -1,4 +1,4 @@
-package com.reactnative.photoview;
+package io.amarcruz.photoview;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
@@ -15,7 +15,8 @@ import java.util.List;
  * @version 1.0
  */
 public class PhotoViewPackage implements ReactPackage {
-    // Deprecated from RN 0.47
+
+    // Deprecated from RN 0.47, but makes happy Studio
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }

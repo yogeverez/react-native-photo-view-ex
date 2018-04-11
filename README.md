@@ -20,23 +20,25 @@ This fork is based on the great work of @alwx (Alexander Pantyuhov) and has this
 * Minor fixes.
 * Typescript definitions.
 
-All this is to adapt it better to my current project, but feel free to use it.
+All this is to adapt it better to my current project (it is not tested on iOS), but feel free to use it.
 
 ## Usage
 
 ```javascript
-import PhotoView from 'react-native-photo-view';
+import PhotoView from 'react-native-photo-view-ex';
 ```
 
 Basics:
+
 ```jsx
-<PhotoView
-  source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-  minimumZoomScale={0.5}
-  maximumZoomScale={3}
-  resizeMode="center"
-  onLoad={() => console.log("Image loaded!")}
-  style={{width: 300, height: 300}} />
+  <PhotoView
+    source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+    minimumZoomScale={0.5}
+    maximumZoomScale={3}
+    resizeMode="center"
+    onLoad={() => console.log("Image loaded!")}
+    style={{width: 300, height: 300}}
+  />
 ```
 
 ### Properties
@@ -89,8 +91,8 @@ features Image has (the goal is to be fully compaitable with Image and support a
 Just two simple steps:
 
 ```bash
-$ yarn add react-native-photo-view
-$ react-native link react-native-photo-view
+$ yarn add react-native-photo-view-ex
+$ react-native link react-native-photo-view-ex
 ```
 
 ## Manual installation
@@ -101,22 +103,22 @@ $ react-native link react-native-photo-view
 1. Add these lines to `android/settings.gradle`
 
 ```groovy
-include ':react-native-photo-view'
-project(':react-native-photo-view').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-photo-view/android')
+include ':react-native-photo-view-ex'
+project(':react-native-photo-view-ex').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-photo-view-ex/android')
 ```
 
 2. Add the dependency to `android/app/build.gradle`
 
 ```groovy
 dependencies {
-    implementation project(':react-native-photo-view')
+    implementation project(':react-native-photo-view-ex')
 }
 ```
 
 3. Register `PhotoViewPackage` in your `MainApplication.java`:
 
 ```java
-import com.reactnative.photoview.PhotoViewPackage;
+import io.amarcruz.photoview.PhotoViewPackage;
 
 // ...
 
@@ -138,7 +140,7 @@ public class MainActivity extends ReactActivity {
 ### iOS
 1. Add this line to your podfile
 ```
-  pod 'react-native-photo-view', path: './node_modules/react-native-photo-view'
+  pod 'react-native-photo-view', path: './node_modules/react-native-photo-view-ex'
 ```
 
 2. Run `pod install`
