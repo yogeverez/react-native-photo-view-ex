@@ -1,4 +1,4 @@
-declare module "react-native-photo-view" {
+declare module "react-native-photo-view-ex" {
 
   import * as React from 'react'
   import {
