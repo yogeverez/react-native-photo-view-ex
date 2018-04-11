@@ -1,9 +1,26 @@
-# react-native-photo-view
+# react-native-photo-view-ex
 
-Provides custom Image view for React Native that allows to perform
-pinch-to-zoom on images. Works on both iOS and Android.
+Provides custom Image view for React Native that allows to perform pinch-to-zoom on images. Works on both iOS and Android.
 
 This component uses [PhotoDraweeView](https://github.com/ongakuer/PhotoDraweeView) for Android and [MWPhotobrowser](https://github.com/mwaterfall/MWPhotoBrowser) on iOS.
+
+## About this fork
+
+This fork is based on the great work of @alwx (Alexander Pantyuhov) and has this changes:
+
+* Android minSDKVersion 21 and targetSdkVersion 26 (configurable).
+* Peer dependent on react-native v0.54 and above.
+* Using the same version of [fresco](https://github.com/facebook/fresco) included by react-native.
+* Updated dependencies
+  - [Relex photodraweeview](https://github.com/ongakuer/PhotoDraweeView) v1.1.3
+  - Android plugin for Gradle v3.1.1 and Gradle v4.4.x
+* Changes to gradle config to support the new version.
+* Changes to some properties, mainly `androidScaleType` replaced by `resizeMode`.
+* PhotoView as PureComponent
+* Minor fixes.
+* Typescript definitions.
+
+All this is to adapt it better to my current project, but feel free to use it.
 
 ## Usage
 
@@ -12,37 +29,47 @@ import PhotoView from 'react-native-photo-view';
 ```
 
 Basics:
-```javascript
+```jsx
 <PhotoView
   source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
   minimumZoomScale={0.5}
   maximumZoomScale={3}
-  androidScaleType="center"
+  resizeMode="center"
   onLoad={() => console.log("Image loaded!")}
   style={{width: 300, height: 300}} />
 ```
 
-## Properties
+### Properties
 
 | Property | Type | Description |
 |-----------------|----------|--------------------------------------------------------------|
-| source | Object | same as source for other React images |
-| loadingIndicatorSource | Object | source for loading indicator |
-| fadeDuration | int | duration of image fade (in ms) |
-| minimumZoomScale | float | The minimum allowed zoom scale. The default value is 1.0 |
+| source | Object | The same as `source` for other React images, except that it does not handle arrays. |
+| loadingIndicatorSource | Object | Similarly to `source`, but used to render the loading indicator.<br>__NOTE:__ Must be a local image. |
+| fadeDuration | int | Duration of the fade, in milliseconds. |
+| scale | float | Zoom scale |
 | maximumZoomScale | float | The maximum allowed zoom scale. The default value is 3.0 |
-| showsHorizontalScrollIndicator | bool | **iOS only**: When true, shows a horizontal scroll indicator. The default value is true. |
-| showsVerticalScrollIndicator | bool | **iOS only**: When true, shows a vertical scroll indicator. The default value is true. |
-| scale | float | Set zoom scale programmatically |
-androidZoomTransitionDuration | int | **Android only**: Double-tap zoom transition duration |
-| androidScaleType | String | **Android only**: One of the default *Android* scale types: "center", "centerCrop", "centerInside", "fitCenter", "fitStart", "fitEnd", "fitXY" |
-| onLoadStart | func | Callback function |
-| onLoad | func | Callback function |
-| onLoadEnd | func | Callback function |
-| onProgress | func | **iOS only**: Callback function, invoked on download progress with {nativeEvent: {loaded, total}}. |
-| onTap | func | Callback function (called on image tap) |
-| onViewTap | func | Callback function (called on tap outside of image) |
-| onScale | func | Callback function |
+| minimumZoomScale | float | The minimum allowed zoom scale. The default value is 1.0 |
+| resizeMode | String | **Android only**: One of "center", "contain", "cover", "fitStart", "fitEnd", "stretch". The default is "cover" |
+| style | Array or Object | Subset of react-native style. See [index.d.ts](https://github.com/aMarCruz/react-native-photo-view/blob/dev/index.d.ts) |
+| showsHorizontalScrollIndicator | bool | **iOS only**: When true, shows a horizontal scroll indicator. The default value is `true`. |
+| showsVerticalScrollIndicator | bool | **iOS only**: When true, shows a vertical scroll indicator. The default value is `true`. |
+| zoomTransitionDuration | int | **Android only**: Double-tap zoom transition duration, in milliseconds |
+
+### Events
+
+| Name | Parameter \* | Description |
+|-----------------|----------|--------------------------------------------------------------|
+| onError | - | Invoked on load error.
+| onLayout | `layout: {x, y, width, height}` | Invoked on mount and layout changes.
+| onLoad | - | Invoked when load completes successfully.
+| onLoadEnd | - | Invoked when load either succeeds or fails.
+| onLoadStart | - | Invoked on load start.
+| onProgress | `loaded, total` | **iOS only**: Invoked on download progress. |
+| onScale | `scale, scaleFactor, focusX, focusY` | Callback function called on scale changes.
+| onTap | `scale, x, y` | Callback function called on image tap.
+| onViewTap | `x, y` | Callback function called on tap outside of the image.
+
+\* In the `nativeEvent` property.
 
 ## Compared to [react-native-image-zoom](https://github.com/Anthonyzou/react-native-image-zoom)
 
@@ -61,34 +88,33 @@ features Image has (the goal is to be fully compaitable with Image and support a
 
 Just two simple steps:
 
-```console
-npm install --save react-native-photo-view
-```
-
-```console
-react-native link react-native-photo-view
+```bash
+$ yarn add react-native-photo-view
+$ react-native link react-native-photo-view
 ```
 
 ## Manual installation
 
 
 ### Android
+
 1. Add these lines to `android/settings.gradle`
-```
+
+```groovy
 include ':react-native-photo-view'
 project(':react-native-photo-view').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-photo-view/android')
 ```
 
-2. Add one more dependency to `android/app/build.gradle`
-```
+2. Add the dependency to `android/app/build.gradle`
+
+```groovy
 dependencies {
-    compile project(':react-native-photo-view')
+    implementation project(':react-native-photo-view')
 }
 ```
 
-3. Add it to your `MainActivity.java` for RN < 0.29 and to your `MainApplication.java` for RN >=0.29
+3. Register `PhotoViewPackage` in your `MainApplication.java`:
 
-To register `PhotoViewPackage`, you need to change the `MainActivity` or `MainApplication` depending on React Native version of your app:
 ```java
 import com.reactnative.photoview.PhotoViewPackage;
 
@@ -109,7 +135,7 @@ public class MainActivity extends ReactActivity {
 }
 ```
 
-### IOS
+### iOS
 1. Add this line to your podfile
 ```
   pod 'react-native-photo-view', path: './node_modules/react-native-photo-view'

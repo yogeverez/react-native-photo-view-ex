@@ -3,6 +3,7 @@ package com.reactnative.photoview;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
@@ -71,38 +72,43 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
         view.setScale(scale, true);
     }
 
-    @ReactProp(name = "androidZoomTransitionDuration")
+    @ReactProp(name = "zoomTransitionDuration")
     public void setZoomTransitionDuration(PhotoView view, int durationMs) {
         view.setZoomTransitionDuration(durationMs);
     }
 
-    @ReactProp(name = "androidScaleType")
-    public void setScaleType(PhotoView view, String scaleType) {
-        ScalingUtils.ScaleType value = ScalingUtils.ScaleType.CENTER;
+    @ReactProp(name = "resizeMode")
+    public void setScaleType(PhotoView view, @Nullable String scaleType) {
+        ScalingUtils.ScaleType value;
 
-        switch (scaleType) {
-            case "center":
-                value = ScalingUtils.ScaleType.CENTER;
-                break;
-            case "centerCrop":
-                value = ScalingUtils.ScaleType.CENTER_CROP;
-                break;
-            case "centerInside":
-                value = ScalingUtils.ScaleType.CENTER_INSIDE;
-                break;
-            case "fitCenter":
-                value = ScalingUtils.ScaleType.FIT_CENTER;
-                break;
-            case "fitStart":
-                value = ScalingUtils.ScaleType.FIT_START;
-                break;
-            case "fitEnd":
-                value = ScalingUtils.ScaleType.FIT_END;
-                break;
-            case "fitXY":
-                value = ScalingUtils.ScaleType.FIT_XY;
-                break;
+        if (scaleType == null) {
+            value = ScalingUtils.ScaleType.CENTER_CROP;
+        } else {
+            switch (scaleType) {
+                case "center":
+                    value = ScalingUtils.ScaleType.CENTER_INSIDE;
+                    break;
+                case "contain":
+                    value = ScalingUtils.ScaleType.FIT_CENTER;
+                    break;
+                case "cover":
+                    value = ScalingUtils.ScaleType.CENTER_CROP;
+                    break;
+                case "fitStart":
+                    value = ScalingUtils.ScaleType.FIT_START;
+                    break;
+                case "fitEnd":
+                    value = ScalingUtils.ScaleType.FIT_END;
+                    break;
+                case "stretch":
+                    value = ScalingUtils.ScaleType.FIT_XY;
+                    break;
+                default:
+                    throw new JSApplicationIllegalArgumentException(
+                            "Invalid resize mode: '" + scaleType + "'");
+            }
         }
+
         GenericDraweeHierarchy hierarchy = view.getHierarchy();
         hierarchy.setActualImageScaleType(value);
     }

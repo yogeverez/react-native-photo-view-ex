@@ -1,5 +1,3 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-
 package com.reactnative.photoview;
 
 import javax.annotation.Nullable;
@@ -16,7 +14,7 @@ import com.facebook.common.util.UriUtil;
 /**
  * Helper class for obtaining information about local images.
  */
-/* package */ class ResourceDrawableIdHelper {
+class ResourceDrawableIdHelper {
 
   private Map<String, Integer> mResourceDrawableIdMap;
 

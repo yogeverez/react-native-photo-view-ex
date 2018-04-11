@@ -1,89 +1,104 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { requireNativeComponent, View, ViewPropTypes } from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { requireNativeComponent, Image, StyleSheet, View, ViewPropTypes } from 'react-native'
 
-const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+export default class PhotoView extends React.PureComponent {
 
-export default class PhotoView extends Component {
     static propTypes = {
-        source: PropTypes.oneOfType([
-            PropTypes.shape({
-                uri: PropTypes.string
-            }),
-            // Opaque type returned by require('./image.jpg')
-            PropTypes.number
-        ]).isRequired,
-        loadingIndicatorSource: PropTypes.oneOfType([
-            PropTypes.shape({
-                uri: PropTypes.string
-            }),
-            // Opaque type returned by require('./image.jpg')
-            PropTypes.number
-        ]),
-        fadeDuration: PropTypes.number,
-        minimumZoomScale: PropTypes.number,
-        maximumZoomScale: PropTypes.number,
-        scale: PropTypes.number,
-        onLoadStart: PropTypes.func,
-        onLoad: PropTypes.func,
-        onLoadEnd: PropTypes.func,
-        onProgress: PropTypes.func,
-        onTap: PropTypes.func,
-        onViewTap: PropTypes.func,
-        onScale: PropTypes.func,
-        showsHorizontalScrollIndicator: PropTypes.bool,
-        showsVerticalScrollIndicator: PropTypes.bool,
-        ...ViewPropTypes
+      source: PropTypes.oneOfType([
+        PropTypes.shape({
+          uri: PropTypes.string,
+        }),
+        PropTypes.number,
+      ]).isRequired,
+      loadingIndicatorSource: PropTypes.oneOfType([
+        PropTypes.shape({
+          uri: PropTypes.string,
+        }),
+        PropTypes.number,
+      ]),
+      fadeDuration: PropTypes.number,
+      minimumZoomScale: PropTypes.number,
+      maximumZoomScale: PropTypes.number,
+      resizeMode: PropTypes.string,
+      scale: PropTypes.number,
+      onLoad: PropTypes.func,
+      onLoadEnd: PropTypes.func,
+      onLoadStart: PropTypes.func,
+      onProgress: PropTypes.func,
+      onScale: PropTypes.func,
+      onTap: PropTypes.func,
+      onViewTap: PropTypes.func,
+      showsHorizontalScrollIndicator: PropTypes.bool,
+      showsVerticalScrollIndicator: PropTypes.bool,
+      ...ViewPropTypes,
     };
 
-    render() {
-        const source = resolveAssetSource(this.props.source);
-        const loadingIndicatorSource = resolveAssetSource(this.props.loadingIndicatorSource);
+    render () {
+      const {
+        onError,
+        onLoad,
+        onLoadEnd,
+        onLoadStart,
+        onProgress,
+        onScale,
+        onTap,
+        onViewTap,
+        source: _source,
+        loadingIndicatorSource: _loadingIndicatorSource,
+        style: _style,
+        ...props
+      } = this.props
 
-        if (source && source.uri === '') {
-            console.warn('source.uri should not be an empty string');
+      const source = Image.resolveAssetSource(_source)
+      const loadingIndicatorSource = Image.resolveAssetSource(_loadingIndicatorSource)
+
+      if (source && source.uri === '') {
+        console.warn('source.uri should not be an empty string')
+      }
+
+      if (props.src) {
+        console.warn('The <PhotoView> component requires a `source` property rather than `src`.')
+      }
+
+      if (source && source.uri) {
+        const { width, height, ...src } = source
+        const style = StyleSheet.flatten([{ width, height }, _style])
+
+        const nativeProps = {
+          onPhotoViewerError: onError,
+          onPhotoViewerLoad: onLoad,
+          onPhotoViewerLoadEnd: onLoadEnd,
+          onPhotoViewerLoadStart: onLoadStart,
+          onPhotoViewerProgress: onProgress,
+          onPhotoViewerScale: onScale,
+          onPhotoViewerTap: onTap,
+          onPhotoViewerViewTap: onViewTap,
+          ...props,
+          style,
+          src,
+          loadingIndicatorSrc: loadingIndicatorSource && loadingIndicatorSource.uri || null,
         }
 
-        if (this.props.src) {
-            console.warn('The <PhotoView> component requires a `source` property rather than `src`.');
-        }
-
-        if (source && source.uri) {
-            const {onLoadStart, onLoad, onLoadEnd, onProgress, onTap, onViewTap, onScale, onError, ...props} = this.props;
-
-            const nativeProps = {
-                onPhotoViewerError: onError,
-                onPhotoViewerLoadStart: onLoadStart,
-                onPhotoViewerLoad: onLoad,
-                onPhotoViewerLoadEnd: onLoadEnd,
-                onPhotoViewerProgress: onProgress,
-                onPhotoViewerTap: onTap,
-                onPhotoViewerViewTap: onViewTap,
-                onPhotoViewerScale: onScale,
-                ...props,
-                src: source,
-                loadingIndicatorSrc: loadingIndicatorSource ? loadingIndicatorSource.uri : null,
-            };
-
-            return <RNPhotoView {...nativeProps} />
-        }
-        return null
+        return <RNPhotoView {...nativeProps} />
+      }
+      return null
     }
 }
 
 const cfg = {
-    nativeOnly: {
-        onPhotoViewerError: true,
-        onPhotoViewerLoadStart: true,
-        onPhotoViewerLoad: true,
-        onPhotoViewerLoadEnd: true,
-        onPhotoViewerProgress: true,
-        onPhotoViewerTap: true,
-        onPhotoViewerViewTap: true,
-        onPhotoViewerScale: true,
-        src: true,
-        loadingIndicatorSrc: true
-    }
-};
+  nativeOnly: {
+    onPhotoViewerError: true,
+    onPhotoViewerLoad: true,
+    onPhotoViewerLoadEnd: true,
+    onPhotoViewerLoadStart: true,
+    onPhotoViewerProgress: true,
+    onPhotoViewerScale: true,
+    onPhotoViewerTap: true,
+    onPhotoViewerViewTap: true,
+    src: true,
+    loadingIndicatorSrc: true,
+  },
+}
 
-const RNPhotoView = requireNativeComponent('RNPhotoView', PhotoView, cfg);
+const RNPhotoView = requireNativeComponent('RNPhotoView', PhotoView, cfg)
