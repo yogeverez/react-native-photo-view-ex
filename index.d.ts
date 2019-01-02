@@ -64,6 +64,7 @@ declare module "react-native-photo-view-ex" {
   }>
 
   export type PhotoViewViewTapEvent = PhotoViewEvent<{
+    scale: number,
     x: number,
     y: number,
   }>
