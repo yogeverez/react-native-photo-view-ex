@@ -16,6 +16,7 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 ### Changed
 
 - Update build.gradle, makes minSdkVersion configurable, default to 16.
+- Integrates [react-image-photo-view#164](https://github.com/alwx/react-native-photo-view/pull/164)
 
 ## \[1.0.3]
 
