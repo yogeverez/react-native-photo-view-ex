@@ -19,6 +19,10 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 - Integrates [react-image-photo-view#164](https://github.com/alwx/react-native-photo-view/pull/164)
 - Update Readme.
 
+### Removed
+
+- Branch "dev"
+
 ## \[1.0.3] - 2018-09-19
 
 - Fix podspec, thanks to @ozby
