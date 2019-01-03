@@ -3,15 +3,17 @@ import groovy.json.JsonSlurper
 
 // dynamically retrieve version from package.json
 def computePackageVersion() {
-    def slurper = new JsonSlurper()
-    def json = slurper.parse(file('../package.json'), "utf-8")
-    return json.version
+    return new JsonSlurper().parse(file('../package.json'), "utf-8").version
 }
 
-def DEF_BUILD_TOOLS_VERSION = '27.0.3'
-def DEF_MIN_SDK_VERSION     = 21
-def DEF_COMPILE_SDK_VERSION = 27
-def DEF_TARGET_SDK_VERSION  = 27
+def getExtValue(prop, fallback) {
+    return rootProject.ext.hasProperty(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+def _buildToolsVersion  = getExtValue('buildToolsVersion', '27.0.3')
+def _compileSdkVersion  = getExtValue('compileSdkVersion', 27)
+def _targetSdkVersion   = getExtValue('targetSdkVersion', 26)
+def _minSdkVersion      = getExtValue('minSdkVersion', 16)
 
 buildscript {
     repositories {
@@ -19,20 +21,20 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEF_COMPILE_SDK_VERSION
-    buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEF_BUILD_TOOLS_VERSION
+    buildToolsVersion _buildToolsVersion
+    compileSdkVersion _compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.hasProperty('minSdkVersion') ? rootProject.minSdkVersion : DEF_MIN_SDK_VERSION
-        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEF_TARGET_SDK_VERSION
-        versionCode 1
+        minSdkVersion _minSdkVersion
+        targetSdkVersion _targetSdkVersion
+        versionCode 2
         versionName computePackageVersion()
     }
     lintOptions {
@@ -42,14 +44,19 @@ android {
 
 repositories {
     mavenLocal()
-    google()
+    jcenter()
     maven {
         url "$rootDir/../node_modules/react-native/android"
     }
-    jcenter()
 }
 
 dependencies {
-    implementation 'com.facebook.react:react-native:+'
+    compileOnly 'com.facebook.react:react-native:+'
     implementation 'me.relex:photodraweeview:1.1.3'
 }
+
+task customClean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+clean.dependsOn customClean

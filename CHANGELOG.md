@@ -7,6 +7,15 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 ### Added
 
 - `scale` property to the onViewTap event.
+- customClean task in build.gradle
+
+### Fixed
+
+- Fix "Could not find lint-gradle-api.jar", thanks to @ArmandoAssuncao
+
+### Changed
+
+- Update build.gradle, makes minSdkVersion configurable, default to 16.
 
 ## \[1.0.3]
 
