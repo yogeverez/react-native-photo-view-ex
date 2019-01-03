@@ -17,16 +17,17 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 
 - Update build.gradle, makes minSdkVersion configurable, default to 16.
 - Integrates [react-image-photo-view#164](https://github.com/alwx/react-native-photo-view/pull/164)
+- Update Readme.
 
-## \[1.0.3]
+## \[1.0.3] - 2018-09-19
 
 - Fix podspec, thanks to @ozby
 
-## \[1.0.2]
+## \[1.0.2] - 2018-04-11
 
 - Allows you to configure the SDK versions using variables from [ExtraPropertiesExtension](https://docs.gradle.org/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html).
 
-## \[1.0.1]
+## \[1.0.1] - 2018-04-11
 
 - Fixes error en typings.
 
@@ -39,7 +40,7 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 - Using the `Image.resolveAssetSource` method instead of requiring the module directly.
 - Updated README.md
 
-## \[1.5.3]
+## \[1.5.3] - 2018-04-09
 
 - Apply "Fixing initialZoomScaleWithMinScale when image is larger than the screen #86" by @douglasjunior
 - Updated build.gradle to get settings from root project.
