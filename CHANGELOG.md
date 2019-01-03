@@ -2,12 +2,13 @@
 
 Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-view)
 
-## \[Unreleased]
+## \[1.0.4]
 
 ### Added
 
 - `scale` property to the onViewTap event.
 - customClean task in build.gradle
+- npm and license badges.
 
 ### Fixed
 
@@ -18,6 +19,7 @@ Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-vie
 - Update build.gradle, makes minSdkVersion configurable, default to 16.
 - Integrates [react-image-photo-view#164](https://github.com/alwx/react-native-photo-view/pull/164)
 - Update Readme.
+- Update example to RN 0.57.8
 
 ### Removed
 
