@@ -2,7 +2,7 @@
 
 Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-view)
 
-## \[1.0.4]
+## \[1.0.4] - 2019-01-02
 
 ### Added
 
