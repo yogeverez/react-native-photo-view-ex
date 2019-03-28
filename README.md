@@ -140,7 +140,7 @@ react-native link react-native-photo-view-ex
 1. Add this line to your podfile
 
   ```pod
-  pod 'react-native-photo-view', path: './node_modules/react-native-photo-view-ex'
+  pod 'react-native-photo-view-ex', path: './node_modules/react-native-photo-view-ex'
   ```
 
 2. Run `pod install`
