@@ -38,8 +38,8 @@ declare module "react-native-photo-view-ex" {
     opacity?: number,
     position?: 'absolute' | 'relative',
     zIndex?: number,
-    width?: any,
-    height?: any
+    width?: number | string,
+    height?: number | string
   }
 
   // helper for event interface
