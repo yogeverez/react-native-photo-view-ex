@@ -13,13 +13,13 @@ public class ImageEvent extends Event<ImageEvent> {
   @Retention(RetentionPolicy.SOURCE)
   @interface ImageEventType {}
 
-  public static final int ON_ERROR = 1;
-  public static final int ON_LOAD = 2;
-  public static final int ON_LOAD_END = 3;
-  public static final int ON_LOAD_START = 4;
-  public static final int ON_TAP = 5;
-  public static final int ON_VIEW_TAP = 6;
-  public static final int ON_SCALE = 7;
+  static final int ON_ERROR = 1;
+  static final int ON_LOAD = 2;
+  static final int ON_LOAD_END = 3;
+  static final int ON_LOAD_START = 4;
+  static final int ON_TAP = 5;
+  static final int ON_VIEW_TAP = 6;
+  static final int ON_SCALE = 7;
 
   private final int mEventType;
   private WritableMap mMap;
@@ -30,7 +30,7 @@ public class ImageEvent extends Event<ImageEvent> {
     mMap = null;
   }
 
-  public static String eventNameForType(@ImageEventType int eventType) {
+  static String eventNameForType(@ImageEventType int eventType) {
     switch(eventType) {
       case ON_ERROR:
         return "photoViewError";
@@ -47,7 +47,7 @@ public class ImageEvent extends Event<ImageEvent> {
       case ON_SCALE:
         return "photoViewScale";
       default:
-        throw new IllegalStateException("Invalid image event: " + Integer.toString(eventType));
+        throw new IllegalStateException("Invalid image event: " + eventType);
     }
   }
 
@@ -68,7 +68,7 @@ public class ImageEvent extends Event<ImageEvent> {
     rctEventEmitter.receiveEvent(getViewTag(), getEventName(), mMap);
   }
 
-  public ImageEvent setExtras(WritableMap map){
+  ImageEvent setExtras(WritableMap map){
     this.mMap = map;
     return this;
   }

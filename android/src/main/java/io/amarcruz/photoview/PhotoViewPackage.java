@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author alwx (https://github.com/alwx)
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class PhotoViewPackage implements ReactPackage {
 
     // Deprecated from RN 0.47, but makes happy Studio
@@ -22,14 +25,16 @@ public class PhotoViewPackage implements ReactPackage {
     }
 
     @Override
-    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+    @Nonnull
+    public List<ViewManager> createViewManagers(@Nonnull ReactApplicationContext reactContext) {
         List<ViewManager> viewManagers = new ArrayList<>();
         viewManagers.add(new PhotoViewManager(reactContext));
         return viewManagers;
     }
 
     @Override
-    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+    @Nonnull
+    public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
         return Collections.emptyList();
     }
 }

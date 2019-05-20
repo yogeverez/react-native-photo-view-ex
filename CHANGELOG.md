@@ -2,6 +2,19 @@
 
 Fork of [react-native-photo-view](https://github.com/alwx/react-native-photo-view)
 
+## \[1.1.0] - 2019-05-20
+
+### Added
+
+- Missing types in TS definitions.
+- Markdownlint config.
+
+### Changed
+
+- Some code cleanup.
+- Updated Build Tools to 28.x
+- RN peerDependencies
+
 ## \[1.0.4] - 2019-01-02
 
 ### Added

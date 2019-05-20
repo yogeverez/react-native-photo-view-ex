@@ -11,6 +11,7 @@ import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 
@@ -28,12 +29,14 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return REACT_CLASS;
     }
 
     @Override
-    protected PhotoView createViewInstance(ThemedReactContext reactContext) {
+    @Nonnull
+    protected PhotoView createViewInstance(@Nonnull ThemedReactContext reactContext) {
         return new PhotoView(reactContext);
     }
 
@@ -117,7 +120,7 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
     public @Nullable
     Map<String, Object> getExportedCustomDirectEventTypeConstants() {
         return MapBuilder.of(
-                ImageEvent.eventNameForType(ImageEvent.ON_ERROR), (Object) MapBuilder.of("registrationName", "onPhotoViewerError"),
+                ImageEvent.eventNameForType(ImageEvent.ON_ERROR), MapBuilder.of("registrationName", "onPhotoViewerError"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD_START), MapBuilder.of("registrationName", "onPhotoViewerLoadStart"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD), MapBuilder.of("registrationName", "onPhotoViewerLoad"),
                 ImageEvent.eventNameForType(ImageEvent.ON_LOAD_END), MapBuilder.of("registrationName", "onPhotoViewerLoadEnd"),
@@ -128,7 +131,7 @@ public class PhotoViewManager extends SimpleViewManager<PhotoView> {
     }
 
     @Override
-    protected void onAfterUpdateTransaction(PhotoView view) {
+    protected void onAfterUpdateTransaction(@Nonnull PhotoView view) {
         super.onAfterUpdateTransaction(view);
         view.maybeUpdateView(Fresco.newDraweeControllerBuilder());
     }

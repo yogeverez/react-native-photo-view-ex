@@ -11,12 +11,12 @@ This component uses [PhotoDraweeView](https://github.com/ongakuer/PhotoDraweeVie
 
 This fork is based on the great work of @alwx (Alexander Pantyuhov) and has this changes:
 
-- Android minSDKVersion 16 and targetSdkVersion 26 (configurable).
-- Peer dependent on react-native v0.54 and above.
+- Android Build Tools 28.0.3 and targetSdkVersion 28 (configurable).
+- Peer dependent on react-native v0.57 and above.
 - Using the same version of [fresco](https://github.com/facebook/fresco) included by react-native.
 - Updated dependencies
   - [Relex photodraweeview](https://github.com/ongakuer/PhotoDraweeView) v1.1.3
-  - Android plugin for Gradle v3.1.x and Gradle v4.4.x
+  - Android plugin for Gradle v4.10.x
 - Changes to gradle config to support the new version.
 - Changes to some properties, mainly `androidScaleType` replaced by `resizeMode`.
 - PhotoView as PureComponent.
@@ -49,7 +49,7 @@ Basics:
 | Property | Type | Description
 |----------|------|-------------
 | source | Object | The same as `source` for other React images, except that it does not handle arrays.
-| loadingIndicatorSource | Object | Similarly to `source`, but used to render the loading indicator.<br>**NOTE:** Must be a local image.
+| loadingIndicatorSource | Object | Similarly to `source`, but used to render the loading indicator. **Must be a local image**
 | fadeDuration | int | Duration of the fade, in milliseconds.
 | scale | float | Zoom scale
 | maximumZoomScale | float | The maximum allowed zoom scale. The default value is 3.0
@@ -100,27 +100,27 @@ react-native link react-native-photo-view-ex
 
 1. Add these lines to `android/settings.gradle`
 
-  ```groovy
-  include ':react-native-photo-view-ex'
-  project(':react-native-photo-view-ex').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-photo-view-ex/android')
-  ```
+    ```groovy
+    include ':react-native-photo-view-ex'
+    project(':react-native-photo-view-ex').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-photo-view-ex/android')
+    ```
 
 2. Add the dependency to `android/app/build.gradle`
 
-  ```groovy
-  dependencies {
+    ```groovy
+    dependencies {
       implementation project(':react-native-photo-view-ex')
-  }
-  ```
+    }
+    ```
 
 3. Register `PhotoViewPackage` in your `MainApplication.java`:
 
-  ```java
-  import io.amarcruz.photoview.PhotoViewPackage;
+    ```java
+    import io.amarcruz.photoview.PhotoViewPackage;
 
-  // ...
+    // ...
 
-  public class MainActivity extends ReactActivity {
+    public class MainActivity extends ReactActivity {
       // ...
 
       @Override
@@ -132,16 +132,16 @@ react-native link react-native-photo-view-ex
       }
 
       // ...
-  }
-  ```
+    }
+    ```
 
 ### iOS
 
 1. Add this line to your podfile
 
-  ```pod
-  pod 'react-native-photo-view-ex', path: './node_modules/react-native-photo-view-ex'
-  ```
+    ```pod
+    pod 'react-native-photo-view-ex', path: './node_modules/react-native-photo-view-ex'
+    ```
 
 2. Run `pod install`
 

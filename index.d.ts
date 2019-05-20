@@ -14,32 +14,34 @@ declare module "react-native-photo-view-ex" {
   type PhotoViewResizeMode = "center" | "contain" | "cover" | "fitStart" | "fitEnd" | "stretch"
 
   export interface PhotoViewStyle extends TransformsStyle {
+    bottom?: number,
     display?: 'flex' | 'none',
+    end?: number,
     flex?: number,
     flexGrow?: number,
     flexShrink?: number,
-    top?: number,
-    right?: number,
-    bottom?: number,
+    height?: number | string
     left?: number,
-    start?: number,
-    end?: number,
     margin?: number,
-    marginHorizontal?: number,
-    marginVertical?: number,
-    marginTop?: number,
-    marginRight?: number,
     marginBottom?: number,
-    marginLeft?: number,
-    marginStart?: number,
     marginEnd?: number,
-    maxWidth?: number,
+    marginHorizontal?: number,
+    marginLeft?: number,
+    marginRight?: number,
+    marginStart?: number,
+    marginTop?: number,
+    marginVertical?: number,
     maxHeight?: number,
+    maxWidth?: number,
+    minHeight?: number,
+    minWidth?: number,
     opacity?: number,
     position?: 'absolute' | 'relative',
-    zIndex?: number,
+    right?: number,
+    start?: number,
+    top?: number,
     width?: number | string,
-    height?: number | string
+    zIndex?: number,
   }
 
   // helper for event interface

@@ -3,16 +3,16 @@ import groovy.json.JsonSlurper
 
 // dynamically retrieve version from package.json
 def computePackageVersion() {
-    return new JsonSlurper().parse(file('../package.json'), "utf-8").version
+    new JsonSlurper().parse(file('../package.json'), "utf-8").version
 }
 
 def getExtValue(prop, fallback) {
-    return rootProject.ext.hasProperty(prop) ? rootProject.ext.get(prop) : fallback
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
-def _buildToolsVersion  = getExtValue('buildToolsVersion', '27.0.3')
-def _compileSdkVersion  = getExtValue('compileSdkVersion', 27)
-def _targetSdkVersion   = getExtValue('targetSdkVersion', 26)
+def _buildToolsVersion  = getExtValue('buildToolsVersion', '28.0.3')
+def _compileSdkVersion  = getExtValue('compileSdkVersion', 28)
+def _targetSdkVersion   = getExtValue('targetSdkVersion', 28)
 def _minSdkVersion      = getExtValue('minSdkVersion', 16)
 
 buildscript {
@@ -21,7 +21,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.3.1'
     }
 }
 
@@ -40,10 +40,15 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
     mavenLocal()
+    google()
     jcenter()
     maven {
         url "$rootDir/../node_modules/react-native/android"
