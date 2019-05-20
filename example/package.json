@@ -1,16 +1,15 @@
 {
   "name": "example",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && cd android && ./gradlew clean",
     "test": "jest"
   },
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.8",
-    "react-native-photo-view-ex": "^1.0.4"
+    "react-native-photo-view-ex": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
